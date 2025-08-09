@@ -1,0 +1,25 @@
+# Node dependencies
+node_modules/
+
+# Environment
+.env
+
+# SQLite databases and sessions
+/db/*.sqlite
+/db/*.db
+
+# Uploads (user content)
+/uploads/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
+*.log
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
