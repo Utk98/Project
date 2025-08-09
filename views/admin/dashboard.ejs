@@ -1,0 +1,18 @@
+<%- include('../partials/header') %>
+
+<h2>Dashboard</h2>
+
+<div class="stats">
+  <div class="stat">Notices: <strong><%= counts.notices %></strong></div>
+  <div class="stat">Contacts: <strong><%= counts.contacts %></strong></div>
+</div>
+
+<div class="actions">
+  <a class="btn" href="/admin/notices/new">New Notice</a>
+  <a class="btn" href="/admin/contacts/new">New Contact</a>
+</div>
+
+<p class="muted">Database: <code><%= dbPath %></code></p>
+
+<%- include('../partials/footer') %>
+

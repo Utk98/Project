@@ -1,0 +1,33 @@
+<%- include('../partials/header') %>
+
+<article>
+  <h2><%= post.title %></h2>
+  <p class="meta">
+    <span class="badge"><%= post.category %></span>
+    <span>Posted <%= dayjs(post.created_at).format('DD MMM YYYY HH:mm') %> by <%= post.author %></span>
+  </p>
+  <% if (post.attachment_path && isImage(post.attachment_path)) { %>
+    <img class="detail-image" src="<%= post.attachment_path %>" alt="Attachment" />
+  <% } %>
+  <p><%= post.description %></p>
+  <% if (post.price) { %>
+    <p><strong>Price:</strong> ₹<%= post.price %></p>
+  <% } %>
+  <h3>Contact</h3>
+  <ul>
+    <% if (post.contact_name) { %><li><strong>Name:</strong> <%= post.contact_name %></li><% } %>
+    <% if (post.contact_phone) { %><li><strong>Phone:</strong> <a href="tel:<%= post.contact_phone %>"><%= post.contact_phone %></a></li><% } %>
+    <% if (post.contact_email) { %><li><strong>Email:</strong> <a href="mailto:<%= post.contact_email %>"><%= post.contact_email %></a></li><% } %>
+  </ul>
+  <% if (user && (user.role === 'admin' || user.id === post.created_by)) { %>
+    <p>
+      <a class="btn" href="/market/<%= post.id %>/edit">Edit</a>
+      <form action="/market/<%= post.id %>/delete" method="post" style="display:inline" onsubmit="return confirm('Delete this post?')">
+        <button class="btn btn-danger" type="submit">Delete</button>
+      </form>
+    </p>
+  <% } %>
+</article>
+
+<%- include('../partials/footer') %>
+

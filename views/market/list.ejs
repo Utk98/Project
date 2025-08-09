@@ -1,0 +1,46 @@
+<%- include('../partials/header') %>
+
+<h2>Marketplace</h2>
+
+<form method="get" class="filter">
+  <label>
+    Category:
+    <select name="category" onchange="this.form.submit()">
+      <option value="" <%= !category ? 'selected' : '' %>>All</option>
+      <option value="buy" <%= category === 'buy' ? 'selected' : '' %>>Buy</option>
+      <option value="sell" <%= category === 'sell' ? 'selected' : '' %>>Sell</option>
+      <option value="rent" <%= category === 'rent' ? 'selected' : '' %>>Rent</option>
+      <option value="general" <%= category === 'general' ? 'selected' : '' %>>General</option>
+    </select>
+  </label>
+  <% if (user) { %>
+    <a class="btn" href="/market/new" style="margin-left:8px">New Post</a>
+  <% } else { %>
+    <a class="btn btn-outline" href="/admin/login" style="margin-left:8px">Login</a>
+    <a class="btn" href="/register" style="margin-left:8px">Register</a>
+  <% } %>
+</form>
+
+<div class="cards">
+  <% if (!posts || posts.length === 0) { %>
+    <p>No posts yet.</p>
+  <% } %>
+  <% (posts || []).forEach(p => { %>
+    <article class="card notice-card">
+      <h3><a href="/market/<%= p.id %>"><%= p.title %></a></h3>
+      <p class="meta">
+        <span class="badge"><%= p.category %></span>
+        <span><%= dayjs(p.created_at).format('DD MMM YYYY') %></span>
+        <span>by <%= p.author %></span>
+      </p>
+      <% if (p.attachment_path && isImage(p.attachment_path)) { %>
+        <a href="/market/<%= p.id %>"><img class="thumb" src="<%= p.attachment_path %>" alt="Attachment" /></a>
+      <% } %>
+      <p><%= p.description.length > 120 ? p.description.slice(0, 120) + '…' : p.description %></p>
+      <% if (p.price) { %><p><strong>Price:</strong> ₹<%= p.price %></p><% } %>
+    </article>
+  <% }) %>
+</div>
+
+<%- include('../partials/footer') %>
+

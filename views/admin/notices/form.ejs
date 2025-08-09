@@ -1,0 +1,35 @@
+<%- include('../../partials/header') %>
+
+<h2><%= notice ? 'Edit Notice' : 'New Notice' %></h2>
+<% if (error) { %>
+  <p class="error"><%= error %></p>
+<% } %>
+
+<form method="post" enctype="multipart/form-data" action="<%= notice ? '/admin/notices/' + notice.id + '/edit' : '/admin/notices/new' %>" class="form">
+  <label>Title
+    <input type="text" name="title" value="<%= notice ? notice.title : '' %>" required />
+  </label>
+  <label>Category
+    <select name="category">
+      <option value="announcement" <%= notice && notice.category === 'announcement' ? 'selected' : '' %>>Announcement</option>
+      <option value="event" <%= notice && notice.category === 'event' ? 'selected' : '' %>>Event</option>
+      <option value="general" <%= notice && notice.category === 'general' ? 'selected' : '' %>>General</option>
+    </select>
+  </label>
+  <label>Content
+    <textarea name="content" rows="6" required><%= notice ? notice.content : '' %></textarea>
+  </label>
+  <label>Attachment
+    <input type="file" name="attachment" accept="image/*,application/pdf" />
+    <% if (notice && notice.attachment_path) { %>
+      <span>Current: <a href="<%= notice.attachment_path %>" target="_blank">View</a></span>
+    <% } %>
+  </label>
+  <% if (notice) { %>
+    <label><input type="checkbox" name="is_published" value="1" <%= notice.is_published ? 'checked' : '' %> /> Published</label>
+  <% } %>
+  <button class="btn" type="submit"><%= notice ? 'Update' : 'Create' %></button>
+</form>
+
+<%- include('../../partials/footer') %>
+

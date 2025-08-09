@@ -1,0 +1,34 @@
+<%- include('../partials/header') %>
+
+<h2>All Notices</h2>
+
+<form method="get" class="filter">
+  <label>
+    Category:
+    <select name="category" onchange="this.form.submit()">
+      <option value="" <%= !category ? 'selected' : '' %>>All</option>
+      <option value="announcement" <%= category === 'announcement' ? 'selected' : '' %>>Announcement</option>
+      <option value="event" <%= category === 'event' ? 'selected' : '' %>>Event</option>
+      <option value="general" <%= category === 'general' ? 'selected' : '' %>>General</option>
+    </select>
+  </label>
+</form>
+
+<ul class="list">
+  <% if (!notices || notices.length === 0) { %>
+    <li>No notices found.</li>
+  <% } %>
+  <% (notices || []).forEach(n => { %>
+    <li class="notice-list-item">
+      <div class="notice-list-row">
+        <div class="notice-list-main">
+          <a class="notice-title" href="/notices/<%= n.id %>"><%= n.title %></a>
+          <span class="meta"><span class="badge"><%= n.category %></span> · <%= dayjs(n.created_at).format('DD MMM YYYY') %></span>
+        </div>
+      </div>
+    </li>
+  <% }) %>
+</ul>
+
+<%- include('../partials/footer') %>
+

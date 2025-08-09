@@ -1,0 +1,20 @@
+<%- include('../partials/header') %>
+
+<h2>Important Contacts</h2>
+<ul class="list">
+  <% if (!contacts || contacts.length === 0) { %>
+    <li>No contacts added yet.</li>
+  <% } %>
+  <% (contacts || []).forEach(c => { %>
+    <li>
+      <div><strong><%= c.name %></strong> <span class="muted"><%= c.role || '' %></span></div>
+      <div>
+        <% if (c.phone) { %><span>📞 <a href="tel:<%= c.phone %>"><%= c.phone %></a></span><% } %>
+        <% if (c.email) { %> · <span>✉️ <a href="mailto:<%= c.email %>"><%= c.email %></a></span><% } %>
+      </div>
+    </li>
+  <% }) %>
+</ul>
+
+<%- include('../partials/footer') %>
+

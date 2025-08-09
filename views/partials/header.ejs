@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#2363eb" />
+  <title>School Notice Board</title>
+  <link rel="icon" type="image/svg+xml" href="/public/favicon.svg" />
+  <link rel="stylesheet" href="/public/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/">
+        <img src="/public/images/logo.svg" alt="School" class="logo" />
+        <span class="brand-text">School Notice Board</span>
+      </a>
+      <nav class="main-nav">
+        <a href="/">Home</a>
+        <a href="/notices">Notices</a>
+        <a href="/contacts">Contacts</a>
+        <a href="/market">Buy/Sell/Rent</a>
+        <% if (typeof user !== 'undefined' && user) { %>
+          <a class="btn btn-outline" href="/admin/dashboard">Dashboard</a>
+          <a class="btn btn-outline" href="/admin/logout">Logout</a>
+        <% } else { %>
+          <a class="btn btn-outline" href="/admin/login">Login</a>
+          <a class="btn" href="/register">Register</a>
+        <% } %>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+

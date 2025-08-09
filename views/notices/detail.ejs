@@ -1,0 +1,30 @@
+<%- include('../partials/header') %>
+
+<article>
+  <h2><%= notice.title %></h2>
+  <p class="meta">
+    <span class="badge"><%= notice.category %></span>
+    <span>Posted <%= dayjs(notice.created_at).format('DD MMM YYYY HH:mm') %></span>
+  </p>
+  <div class="content">
+    <% if (notice.attachment_path && isImage(notice.attachment_path)) { %>
+      <img class="detail-image" src="<%= notice.attachment_path %>" alt="Attachment" />
+    <% } %>
+    <p><%= notice.content %></p>
+  </div>
+  <% if (notice.attachment_path && isPdf(notice.attachment_path)) { %>
+    <p class="attachment">Attachment: <img class="pdf-icon" src="/public/images/pdf.svg" alt="PDF" /> <a href="<%= notice.attachment_path %>" target="_blank">Download PDF</a></p>
+  <% } %>
+</article>
+
+<% if (user) { %>
+  <p>
+    <a class="btn" href="/admin/notices/<%= notice.id %>/edit">Edit</a>
+    <form action="/admin/notices/<%= notice.id %>/delete" method="post" style="display:inline" onsubmit="return confirm('Delete this notice?')">
+      <button class="btn btn-danger" type="submit">Delete</button>
+    </form>
+  </p>
+<% } %>
+
+<%- include('../partials/footer') %>
+

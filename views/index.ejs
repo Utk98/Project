@@ -1,0 +1,40 @@
+<%- include('partials/header') %>
+
+<section class="hero">
+  <div class="hero-content">
+    <h2>Welcome to the School Notice Board</h2>
+    <p>Stay updated with announcements, events, and important information.</p>
+    <div class="hero-actions">
+      <a class="btn" href="/notices">Browse Notices</a>
+      <a class="btn btn-outline" href="/contacts">Important Contacts</a>
+    </div>
+  </div>
+  <div class="hero-illustration">
+    <img src="/public/images/hero.svg" alt="Notices" />
+  </div>
+  </section>
+
+<h2 class="section-title">Latest Notices</h2>
+
+<div class="cards">
+  <% if (!notices || notices.length === 0) { %>
+    <p>No notices yet.</p>
+  <% } %>
+  <% (notices || []).forEach(n => { %>
+    <article class="card notice-card">
+      <h3><a href="/notices/<%= n.id %>"><%= n.title %></a></h3>
+      <p class="meta">
+        <span class="badge"><%= n.category %></span>
+        <span><%= dayjs(n.created_at).format('DD MMM YYYY') %></span>
+      </p>
+      <% if (n.attachment_path && isImage(n.attachment_path)) { %>
+        <a href="/notices/<%= n.id %>"><img class="thumb" src="<%= n.attachment_path %>" alt="Attachment" /></a>
+      <% } %>
+      <p><%= n.content.length > 120 ? n.content.slice(0, 120) + '…' : n.content %></p>
+    </article>
+  <% }) %>
+  
+</div>
+
+<%- include('partials/footer') %>
+

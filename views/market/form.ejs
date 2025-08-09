@@ -1,0 +1,48 @@
+<%- include('../partials/header') %>
+
+<h2><%= post ? 'Edit Post' : 'New Post' %></h2>
+<% if (error) { %>
+  <p class="error"><%= error %></p>
+<% } %>
+
+<form method="post" enctype="multipart/form-data" action="<%= post ? '/market/' + post.id + '/edit' : '/market/new' %>" class="form">
+  <label>Title
+    <input type="text" name="title" value="<%= post ? post.title : '' %>" required />
+  </label>
+  <label>Category
+    <select name="category" required>
+      <option value="buy" <%= post && post.category === 'buy' ? 'selected' : '' %>>Buy</option>
+      <option value="sell" <%= post && post.category === 'sell' ? 'selected' : '' %>>Sell</option>
+      <option value="rent" <%= post && post.category === 'rent' ? 'selected' : '' %>>Rent</option>
+      <option value="general" <%= post && post.category === 'general' ? 'selected' : '' %>>General</option>
+    </select>
+  </label>
+  <label>Description
+    <textarea name="description" rows="6" required><%= post ? post.description : '' %></textarea>
+  </label>
+  <label>Price (optional)
+    <input type="number" step="0.01" name="price" value="<%= post && post.price ? post.price : '' %>" />
+  </label>
+  <label>Attachment
+    <input type="file" name="attachment" accept="image/*,application/pdf" />
+    <% if (post && post.attachment_path) { %>
+      <span>Current: <a href="<%= post.attachment_path %>" target="_blank">View</a></span>
+    <% } %>
+  </label>
+  <fieldset>
+    <legend>Contact</legend>
+    <label>Name
+      <input type="text" name="contact_name" value="<%= post ? post.contact_name : '' %>" />
+    </label>
+    <label>Phone
+      <input type="tel" name="contact_phone" value="<%= post ? post.contact_phone : '' %>" />
+    </label>
+    <label>Email
+      <input type="email" name="contact_email" value="<%= post ? post.contact_email : '' %>" />
+    </label>
+  </fieldset>
+  <button class="btn" type="submit"><%= post ? 'Update' : 'Create' %></button>
+</form>
+
+<%- include('../partials/footer') %>
+
