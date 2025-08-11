@@ -23,10 +23,9 @@ Default admin: `admin` / `admin123` (change in `.env`).
 - `ADMIN_USERNAME`, `ADMIN_PASSWORD`
 
 ## Deploy
-- Vercel: included `vercel.json` and serverless entry `api/index.js`
-- Set env vars: `SESSION_SECRET`, `ADMIN_USERNAME`, `ADMIN_PASSWORD`
-- SQLite path on Vercel uses `/tmp/app.sqlite` (ephemeral; not persistent)
-- For persistent DB/uploads, use a VM/VPS (Render/Railway) or external DB/storage
+- Use `npm start`
+- Persist `db/` and `uploads/` on the host
+- Set environment variables
 
 ## Docs
 - `docs/report.md` – 4-page report

@@ -43,24 +43,15 @@ app.locals.isPdf = function isPdfAttachment(filePath) {
   return !!(filePath && /\.pdf$/i.test(filePath));
 };
 
-// Use MemoryStore on Vercel since filesystem is ephemeral/read-only
-const isVercel = !!process.env.VERCEL;
-const sessionOptions = {
-  secret: process.env.SESSION_SECRET || 'dev_secret_change_me',
-  resave: false,
-  saveUninitialized: false,
-  cookie: { maxAge: 1000 * 60 * 60 * 8 },
-};
-if (isVercel) {
-  app.use(session(sessionOptions));
-} else {
-  app.use(
-    session({
-      ...sessionOptions,
-      store: new SQLiteStore({ dir: DB_DIR, db: 'sessions.sqlite' }),
-    })
-  );
-}
+app.use(
+  session({
+    store: new SQLiteStore({ dir: DB_DIR, db: 'sessions.sqlite' }),
+    secret: process.env.SESSION_SECRET || 'dev_secret_change_me',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 1000 * 60 * 60 * 8 },
+  })
+);
 
 // Make current user available in all views
 app.use((req, res, next) => {
@@ -402,13 +393,9 @@ app.post('/admin/contacts/:id/delete', requireAuth, (req, res) => {
   });
 });
 
-// Export app for serverless; start only when run directly
-if (require.main === module) {
-  app.listen(PORT, () => {
-    console.log(`School Notice Board running on http://localhost:${PORT}`);
-  });
-}
-
-module.exports = app;
+// Start server
+app.listen(PORT, () => {
+  console.log(`School Notice Board running on http://localhost:${PORT}`);
+});
 
 
